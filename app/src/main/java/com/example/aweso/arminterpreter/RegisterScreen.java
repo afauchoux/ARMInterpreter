@@ -1,5 +1,6 @@
 package com.example.aweso.arminterpreter;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -51,5 +52,12 @@ public class RegisterScreen extends AppCompatActivity
     {
         //globally save the current values of all the registers such that those values are
         //accessible in MainActivity.  You should do something in MainActivity to prove this.
+        for (int i = 0; i < theRegisterETs.length; i++)
+        {
+            String textVersion = this.theRegisterETs[i].getText().toString();
+            ARMap.registers[i] = textVersion;
+        }
+        Intent i = new Intent(this, MainActivity.class);
+        this.startActivity(i);
     }
 }

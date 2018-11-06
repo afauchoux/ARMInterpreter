@@ -4,7 +4,7 @@ public class ARMap
 {
     private static String[] instructions = {"ADD", "SUB"};
     private static int[] instructionMappings = {1112, 1624};
-    private static String[] registers = new String[31];
+    public static String[] registers = new String[31];
     private static String[] registerBinMap = new String[31];
 
     public static void init()
