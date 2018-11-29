@@ -64,5 +64,16 @@ public class Instruction
             int finalMemoryBucket = baseAddressValue + offset;
             destinationRegister.setValue(ARMap.memory[finalMemoryBucket]);
         }
+
+        else if(this.magicTrick.equalsIgnoreCase("STUR"))
+        {
+            Register sourceRegister = ARMap.findRegisterWithName(this.destinationName);
+            Register baseRegister = ARMap.findRegisterWithName(theInputNames.get(0).substring(1));
+            String temp = theInputNames.get(1);
+            int offset = Integer.parseInt(temp.substring(0, temp.length()-1));
+            int baseAddressValue = baseRegister.getValue();
+            int finalMemoryBucket = baseAddressValue + offset;
+            ARMap.memory[finalMemoryBucket] = sourceRegister.getValue();
+        }
     }
 }
