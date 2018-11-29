@@ -1,19 +1,37 @@
 package com.example.aweso.arminterpreter;
 
+import java.util.Arrays;
+
 public class ARMap
 {
+    //Final Fields
+    public static final int MEMORY_SIZE = 64;
     private static String[] instructions = {"ADD", "SUB"};
     private static int[] instructionMappings = {1112, 1624};
-    public static String[] registers = new String[31];
-    private static String[] registerBinMap = new String[31];
+    public static Register[] registers = new Register[31];
+    public static int[] memory = new int[ARMap.MEMORY_SIZE];
 
     public static void init()
     {
-        for(int i = 0; i < 32; i++)
+        //initialize memory
+        Arrays.fill(ARMap.memory, 0);
+
+        for(int i = 0; i < ARMap.registers.length; i++)
         {
-            ARMap.registers[i] = "X" + i;
-            ARMap.registerBinMap[i] = ARMap.decimalTo5BitBinary(i);
+            ARMap.registers[i] = new Register("X" + i);
         }
+    }
+
+    public static Register findRegisterWithName(String nameOfRegister)
+    {
+        for(Register r : ARMap.registers)
+        {
+            if(r.getHumanReadableName().equalsIgnoreCase(nameOfRegister))
+            {
+                return r;
+            }
+        }
+        return null;
     }
 
     public static BinaryValue lookupInstruction(String instruction)
@@ -29,7 +47,7 @@ public class ARMap
         return null;  //we assume every mapping is found, so this should never get hit!
     }
 
-    private static String decimalTo5BitBinary(int opCode)
+    public static String decimalTo5BitBinary(int opCode)
     {
         return ARMap.decimalToNBitBinary(opCode, 5);
     }
@@ -39,7 +57,7 @@ public class ARMap
         return ARMap.decimalToNBitBinary(opCode, 11);
     }
 
-    private static String decimalToNBitBinary(int opCode, int numBits)
+    public static String decimalToNBitBinary(long opCode, int numBits)
     {
         String answer = "";
         while(opCode > 0)
